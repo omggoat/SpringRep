@@ -17,7 +17,7 @@ import java.util.List;
  * 解会对类级别上的@RequestMapping的声明进行补充
  */
 @Controller
-@RequestMapping("/hello")
+@RequestMapping("/common")
 public class HelloController {
 
     private IStudentRepository isp;

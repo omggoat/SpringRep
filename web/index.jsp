@@ -11,6 +11,8 @@
     <title>test spring mvc</title>
 </head>
 <body>
-  测试请求1：<a href="/hello" method="Get">hello request</a>
+  测试请求1：<a href="/common" method="Get">hello request</a><br>
+  测试请求2：<a href="/common/query" method="Get">requestlist</a><br>
+  测试请求3：<a href="/custom" method="Get">customerequest</a><br>
 </body>
 </html>

@@ -4,6 +4,9 @@ import cn.shil.config.RootConfig;
 import cn.shil.config.WebConfig;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
+import javax.servlet.MultipartConfigElement;
+import javax.servlet.ServletRegistration;
+
 /**
  * AbstractAnnotationConfigDispatcherServletInitializer会同时创建DispatcherServlet和ContextLoaderListener
  */
@@ -17,7 +20,7 @@ public class SpittrWebAppInitializer extends AbstractAnnotationConfigDispatcherS
     }
 
     /**
-     * 方法返回的带有@Configuration注解的类(WebConfig.class)将会用来定义DispatcherServlet创建的应用上下文中的bean
+     * 方法返回的带有@Configuration注解的类(WebConfig.class)将会用来定义DispatcherServlet创建的Spring应用上下文中的bean
      * @return
      */
     protected Class<?>[] getServletConfigClasses() {
@@ -29,6 +32,17 @@ public class SpittrWebAppInitializer extends AbstractAnnotationConfigDispatcherS
      * @return
      */
     protected String[] getServletMappings() {
-        return new String[]{"/"};
+        return new String[]{"/common","/common/query","/common/custom"};
+    }
+
+
+    /**
+     *  此处的registration相当于注册DispacherServlet后返回的该对象信息，所以调用registration相应方法
+     *  就相当于改变DispacherServlet对象的行为
+     * @param registration
+     */
+    @Override
+    protected void customizeRegistration(ServletRegistration.Dynamic registration) {
+        registration.setMultipartConfig(new MultipartConfigElement("D:/uploaddir"));
     }
 }
