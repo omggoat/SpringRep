@@ -1,0 +1,41 @@
+<!DOCTYPE web-app PUBLIC
+ "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+ "http://java.sun.com/dtd/web-app_2_3.dtd" >
+
+<web-app>
+  <!--重要点：ContextLoaderListener中创建ApplicationContext主要用于整个Web应用程序需要共享的一些组件，比如DAO、数据库的ConnectionFactory、service等
+      而由DispatcherServlet创建的ApplicationContext主要用于和该Servlet相关的一些组件，比如Controller、ViewResovler等;
+      对于作用范围而言，在DispatcherServlet中可以引用由ContextLoaderListener所创建的ApplicationContext，而反过来不行（配置反了会出现无法自动装配问题导致容器初始化报错及服务无法启动）
+
+      Spring的具体实现上，这两个ApplicationContext都是通过ServletContext的setAttribute方法放到ServletContext中的。
+      但是，ContextLoaderListener会先于DispatcherServlet创建ApplicationContext，DispatcherServlet在创建ApplicationContext时
+      会先找到由ContextLoaderListener所创建的ApplicationContext，再将后者的ApplicationContext作为参数传给DispatcherServlet的ApplicationContext的setParent()方法
+
+      当Spring在执行ApplicationContext的getBean时，如果在自己context中找不到对应的bean，则会在父ApplicationContext中去找。
+      这也解释了为什么我们可以在DispatcherServlet中获取到由ContextLoaderListener对应的ApplicationContext中的bean -->
+
+  <!--配置ContextLoaderListener start-->
+  <context-param>
+    <param-name>contextConfigLocation</param-name>
+    <param-value>classpath*:applicationContext.xml</param-value>
+  </context-param>
+  <listener>
+    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+  </listener>
+  <!--配置ContextLoaderListener end-->
+
+  <!--配置DispatcherServlet start-->
+  <servlet>
+    <servlet-name>dispacherServlet</servlet-name>
+    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    <init-param>
+      <param-name>contextConfigLocation</param-name>
+      <param-value>classpath*:servletApplicationContext.xml</param-value>
+    </init-param>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>dispacherServlet</servlet-name>
+    <url-pattern>/</url-pattern>
+  </servlet-mapping>
+  <!--配置DispatcherServlet end-->
+</web-app>
