@@ -4,6 +4,7 @@ import cn.shil.config.RootConfig;
 import cn.shil.config.WebConfig;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
+import javax.servlet.Filter;
 import javax.servlet.MultipartConfigElement;
 import javax.servlet.ServletRegistration;
 
@@ -44,5 +45,14 @@ public class SpittrWebAppInitializer extends AbstractAnnotationConfigDispatcherS
     @Override
     protected void customizeRegistration(ServletRegistration.Dynamic registration) {
         registration.setMultipartConfig(new MultipartConfigElement("D:/uploaddir"));
+    }
+
+    /**
+     * getServletFilters()方法返回的所有Filter都会映射到DispatcherServlet上
+     * @return
+     */
+    @Override
+    protected Filter[] getServletFilters() {
+        return new Filter[]{new ForDispacherServletFilter()};
     }
 }
