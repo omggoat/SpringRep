@@ -40,11 +40,20 @@ public class SpittrWebAppInitializer extends AbstractAnnotationConfigDispatcherS
     /**
      *  此处的registration相当于注册DispacherServlet后返回的该对象信息，所以调用registration相应方法
      *  就相当于改变DispacherServlet对象的行为
+     *
+     *  限制文件的大小不超过2MB，整个请求不超过
+     * 4MB，而且所有的文件都要写到磁盘中（对应参数0，在上传的过程中，如果文件大小达到了一个指定最大容量（以字
+     * 节为单位），将会写入到临时文件路径中。默认值为0，也就是
+     * 所有上传的文件都会写入到磁盘上）
      * @param registration
      */
     @Override
     protected void customizeRegistration(ServletRegistration.Dynamic registration) {
-        registration.setMultipartConfig(new MultipartConfigElement("D:/uploaddir"));
+        registration.setMultipartConfig(new MultipartConfigElement(
+                "D:/uploaddir",
+                2097152,
+                4194304,
+                0));
     }
 
     /**
