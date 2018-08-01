@@ -8,9 +8,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>hello student</title>
+    <title>success</title>
 </head>
 <body>
-    hello,the student name is: <%=request.getAttribute("stuname")%>
+      hi,<%=request.getAttribute("name")%>
 </body>
 </html>

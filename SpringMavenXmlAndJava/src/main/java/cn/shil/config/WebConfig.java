@@ -3,11 +3,14 @@ package cn.shil.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.multipart.MultipartResolver;
+import org.springframework.web.multipart.support.StandardServletMultipartResolver;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
+
 
 /**
  * ComponentScan 扫描@Conmponent或者@Controller注解的组件
@@ -39,5 +42,16 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     @Override
     public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
         configurer.enable();
+    }
+
+    /**
+     * DispatcherServlet初始化策略时从Spirng上下文中获取bean策略
+     * 源码：initMultipartResolver(ApplicationContext context){context.getBean("multipartResolver", MultipartResolver.class)}
+     * 具体策略算法在bean对应类的具体实现中
+     * @return
+     */
+    @Bean
+    public MultipartResolver getMultipartResolver(){
+        return new StandardServletMultipartResolver();
     }
 }

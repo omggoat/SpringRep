@@ -8,9 +8,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>hello student</title>
+    <title>uploadok</title>
 </head>
 <body>
-    hello,the student name is: <%=request.getAttribute("stuname")%>
+    the upload method is:<%=request.getAttribute("uploadparam")%>
 </body>
 </html>
