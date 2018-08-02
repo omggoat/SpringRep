@@ -11,6 +11,18 @@
     <title>success</title>
 </head>
 <body>
-      hi,<%=request.getAttribute("name")%>
+<%
+    if(request.getAttribute("studentname")!=null){
+        String name=(String)request.getAttribute("studentname");
+%>
+hi,<%=name%>
+<%
+    }else if(request.getAttribute("studentage")!=null){
+    String age = (String)request.getAttribute("studentage");
+%>
+hi,the student age is:<%=age%>
+<%
+    }
+%>
 </body>
 </html>

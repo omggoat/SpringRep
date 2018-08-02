@@ -21,6 +21,11 @@ public class StudentService implements IStudentService{
     }
 
     @Override
+    public String queryAgeById(String id) {
+        return studentDao.queryAgeById(id);
+    }
+
+    @Override
     public String studentReg(String id, Student o) {
         return studentDao.studentReg(id,o);
     }

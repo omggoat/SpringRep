@@ -11,6 +11,6 @@
     <title>hello student</title>
 </head>
 <body>
-    hello,the student name is: <%=request.getAttribute("stuname")%>
+    hello,the student name is: <%=request.getAttribute("studentname")%>
 </body>
 </html>
