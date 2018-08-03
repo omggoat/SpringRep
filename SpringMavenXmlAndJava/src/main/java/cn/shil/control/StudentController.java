@@ -8,13 +8,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.Part;
 import javax.validation.Valid;
 
 import cn.shil.common.CommonCodeValue;
-
-import java.io.IOException;
 
 @Controller
 @RequestMapping(value = "/student")
@@ -39,6 +35,17 @@ public class StudentController {
             throw new IdNotFoundException();
         model.addAttribute(CommonCodeValue.MODEL_ATTRIBUTE_STUDENTAGE,studentService.queryAgeById(id));
         return CommonCodeValue.RESP_RETURNCODE_SUCCESS;
+    }
+
+    /**
+     * 捕捉该controller出现的IdNotFoundException.class异常，并进行处理
+     * 当既定义了@ResponseStatus又定义了@ExceptionHandler时，进@ExceptionHandler处理
+     * 通常情况只定义@ResponseStatus或@ExceptionHandler
+     * @return
+     */
+    @ExceptionHandler(IdNotFoundException.class)
+    public String HandleNotFoundException(){
+        return CommonCodeValue.RESP_RETURNCODE_ERROR;
     }
 
     /**
