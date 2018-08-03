@@ -1,6 +1,8 @@
 package cn.shil.control;
 
-import cn.shil.common.IdNotFoundException;
+import cn.shil.common.AgeNotFoundException;
+import cn.shil.common.DuplicateValueException;
+import cn.shil.common.NameNotFoundException;
 import cn.shil.entity.Student;
 import cn.shil.service.IStudentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,19 +34,19 @@ public class StudentController {
     @RequestMapping(value = "/getAge",method = RequestMethod.GET)
     public String getAgeById(@RequestParam String id,Model model){
         if("error".equals(studentService.queryAgeById(id)))
-            throw new IdNotFoundException();
+            throw new AgeNotFoundException();
         model.addAttribute(CommonCodeValue.MODEL_ATTRIBUTE_STUDENTAGE,studentService.queryAgeById(id));
         return CommonCodeValue.RESP_RETURNCODE_SUCCESS;
     }
 
     /**
-     * 捕捉该controller出现的IdNotFoundException.class异常，并进行处理
+     * 捕捉该controller出现的AgeNotFoundException.class异常，并进行处理
      * 当既定义了@ResponseStatus又定义了@ExceptionHandler时，进@ExceptionHandler处理
      * 通常情况只定义@ResponseStatus或@ExceptionHandler
      * @return
      */
-    @ExceptionHandler(IdNotFoundException.class)
-    public String HandleNotFoundException(){
+    @ExceptionHandler(AgeNotFoundException.class)
+    public String handleNotFoundException(){
         return CommonCodeValue.RESP_RETURNCODE_ERROR;
     }
 
@@ -57,6 +59,8 @@ public class StudentController {
      */
     @RequestMapping(value = "/queryNameById/{id}",method = RequestMethod.GET)
     public String getStudentNameByID(Model model, @PathVariable("id") String id){
+        if("error".equals(studentService.queryNameById(id)))
+              throw new NameNotFoundException();
         model.addAttribute(CommonCodeValue.MODEL_ATTRIBUTE_STUDENTNAME,studentService.queryNameById(id));
         return CommonCodeValue.RESP_RETURNCODE_HELLO;
     }
@@ -90,6 +94,8 @@ public class StudentController {
             }*/
 
             String result = studentService.studentReg(student.getId(), student);
+            if("error".equals(result))
+                throw new DuplicateValueException();
             model.addAttribute(CommonCodeValue.MODEL_ATTRIBUTE_STUDENTNAME, result);
             return CommonCodeValue.RESP_RETURNCODE_SUCCESS;
         }

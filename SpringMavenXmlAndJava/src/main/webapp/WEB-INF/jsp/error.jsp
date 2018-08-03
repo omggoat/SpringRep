@@ -11,6 +11,15 @@
     <title>error page</title>
 </head>
 <body>
-      error page
+      error page,
+      <%
+          String error_type = (String)request.getAttribute("exception_type");
+         if(null!=error_type){
+       %>
+         the error type is:<%=error_type%>
+       <%
+           }
+       %>
+
 </body>
 </html>

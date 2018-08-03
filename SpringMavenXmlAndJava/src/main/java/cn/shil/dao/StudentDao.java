@@ -43,7 +43,7 @@ public class StudentDao implements IStudentDao{
     @Override
     public String studentReg(String id,Student o) {
         if(map.keySet().contains(id)){
-            return "duplicate name";
+            return "error";
         }else{
             map.put(id,o);
             return o.getName();
