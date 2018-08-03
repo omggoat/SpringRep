@@ -10,6 +10,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import cn.shil.common.CommonCodeValue;
@@ -32,7 +34,7 @@ public class StudentController {
      * @return
      */
     @RequestMapping(value = "/getAge",method = RequestMethod.GET)
-    public String getAgeById(@RequestParam String id,Model model){
+    public String getAgeById(@RequestParam String id, Model model){
         if("error".equals(studentService.queryAgeById(id)))
             throw new AgeNotFoundException();
         model.addAttribute(CommonCodeValue.MODEL_ATTRIBUTE_STUDENTAGE,studentService.queryAgeById(id));
